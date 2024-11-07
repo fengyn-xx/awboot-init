@@ -3,7 +3,7 @@ OUTPUT_ARCH(arm)
 SEARCH_DIR(.)
 MEMORY
 {
-  ram (rwx) : ORIGIN = 0x00038000, LENGTH = 96K
+  ram (rwx) : ORIGIN = 0x00030000, LENGTH = 96K
 }
 STACK_SIZE = 0x1000;
 ENTRY(reset)

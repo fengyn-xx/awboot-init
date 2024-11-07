@@ -50,7 +50,7 @@
 
 
 
-static inline void send_string_via_usart(int a) {
+static void send_string_via_usart(int a) {
 
 	int tmp = a;//+0x10000;
 	
@@ -280,6 +280,21 @@ char *str1 = "zyxwvu";
 char str2[15];
 int ccc = 10;
 void putint(int p);
+
+void print_pc() {
+    uint32_t pc;
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
+}
+
+
 int main(void)
 {
 	char *str0 = "123456abc";
@@ -289,6 +304,18 @@ int main(void)
 	sunxi_usart_putc(&USART_DBG,'{');
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
+	
+	    uint32_t pc;
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
+	
 	sunxi_clk_init();
 /***************************************************/
 	int number = (int)str2;
@@ -298,6 +325,20 @@ int main(void)
 		str22[i] = 'a' + i;
 	}
 	str22[14] = '\0';
+	
+	
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
+	
+	
+	
 /********************
 send_string_via_usart((int)0x0003115c);
 int *p = &ccc;
@@ -334,21 +375,47 @@ int *p = &ccc;
 	sunxi_usart_putc(&USART_DBG,ar);
 *********************/
 	
-	putint((int)str0);
+	/*putint((int)str0);
 	putint((int)str1);
-	putint((int)str2);
+	putint((int)str2);*/
 	send_string_via_usart((int)str2);
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
+	
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
 	
 	send_string_via_usart((int)str1);
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
-	
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
 	send_string_via_usart((int)str0);
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
-
+    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
 	sunxi_usart_putc(&USART_DBG,'}');
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
