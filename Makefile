@@ -65,7 +65,7 @@ build:: $$($(1)_OBJ_DIR)/$$(TARGET)-boot.elf $$($(1)_OBJ_DIR)/$$(TARGET)-boot.bi
 .PRECIOUS : $$($(1)_OBJS)
 $$($(1)_OBJ_DIR)/$$(TARGET)-fel.elf: $$($(1)_OBJS)
 	echo "  LD    $$@"
-	$$(CC) -E -P -x c -D__RAM_BASE=0x00030000 ./arch/arm32/mach-t113s3/link.ld > $$($(1)_OBJ_DIR)/link-fel.ld
+	$$(CC) -E -P -x c -D__RAM_BASE=0x00038000 ./arch/arm32/mach-t113s3/link.ld > $$($(1)_OBJ_DIR)/link-fel.ld
 	$$(CC) $$^ -o $$@ -T $$($(1)_OBJ_DIR)/link-fel.ld $$(LDFLAGS) -Wl,-Map,$$($(1)_OBJ_DIR)/$$(TARGET)-fel.map
 
 $$($(1)_OBJ_DIR)/$$(TARGET)-boot.elf: $$($(1)_OBJS)

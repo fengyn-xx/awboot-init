@@ -4,48 +4,28 @@
 #include "board.h"
 void sunxi_usart_putc(void *arg, char c);
 //void myy_printf((int)fmt,...);
-void putint(int a) {
+void putint(int pc) {
 	
-	//p += 0x1000;
-	//int a = *p;
-    if (a == 0) {
-        sunxi_usart_putc(&USART_DBG, '0');
-        sunxi_usart_putc(&USART_DBG, '\r');
-        sunxi_usart_putc(&USART_DBG, '\n');
-        return;
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	if(pc == 0){
+    		sunxi_usart_putc(&USART_DBG,'z');
+    		break;
+    	}
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
     }
-    
-    if (a < 0) {
-        sunxi_usart_putc(&USART_DBG, '-');
-        a = -a; // 转换为正数
-    }
-    
-    unsigned int count = 1;
-    unsigned int tmp = a;
-    
-    // 计算数字位数
-    while (tmp >= 10) {
-        tmp /= 10;
-        count *= 10;
-    }
-    
-    // 输出数字
-    while (count > 0) {
-        unsigned int digit = a / count;  // 获取当前位
-        sunxi_usart_putc(&USART_DBG, '0' + digit);
-        a -= digit * count;      // 减去当前位的值
-        count /= 10;             // 移动到下一位
-    }
-    
-    sunxi_usart_putc(&USART_DBG, '\r');
-    sunxi_usart_putc(&USART_DBG, '\n');
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
 }
 
 
-static inline void send_string_via_usart(int a) {
+void send_string_via_usart(int a) {
 
-	int tmp = a;//+0x10000;
+	int tmp = a+0x18000;
 	char* str = (char*)tmp;
+	putint((int)str);
 	for(int i = 0;i<100;i++){
 		if(str[i] == '\0')break;
 		sunxi_usart_putc(&USART_DBG,str[i]);

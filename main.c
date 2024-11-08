@@ -16,91 +16,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-/*static inline void send_char_via_usart(uint32_t usart_base, char c) {
-    uint32_t status;
-
-    // 等待发送缓冲区准备好
-    do {
-        __asm__ volatile (
-            "ldr %[status], [%[base], #0x7C] \n"  // 读取状态寄存器 (偏移 0x7C)
-            "tst %[status], #(1 << 1) \n"         // 检查第 1 位 (发送缓冲区是否空)
-            : [status] "=r" (status)              // 输出
-            : [base] "r" (usart_base)             // 输入
-        );
-    } while ((status & (1 << 1)) == 0);
-
-    // 发送字符
-    __asm__ volatile (
-        "str %[ch], [%[base]] \n"  // 将字符 c 写入发送寄存器 (偏移 0x00)
-        :
-        : [ch] "r" ((uint32_t)c), [base] "r" (usart_base)
-    );
-
-    // 等待发送完成
-    do {
-        __asm__ volatile (
-            "ldr %[status], [%[base], #0x7C] \n"  // 读取状态寄存器 (偏移 0x7C)
-            "tst %[status], #(1 << 0) \n"         // 检查第 0 位 (发送是否完成)
-            : [status] "=r" (status)              // 输出
-            : [base] "r" (usart_base)             // 输入
-        );
-    } while ((status & (1 << 0)) != 0);
-}*/
-
-
-
-static void send_string_via_usart(int a) {
-
-	int tmp = a;//+0x10000;
-	
-	/*unsigned int ch = (tmp>>28) & 0xF;
-	char ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	 ch = (tmp>>24) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	 ch = (tmp>>20) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	ch = (tmp>>16) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	ch = (tmp>>12) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-	
-		ch = (tmp>>8) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-	
-		ch = (tmp>>4) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-		ch = (tmp>>0) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');*/
-	
-	char* str = (char*)tmp;
-	for(int i = 0;i<100;i++){
-		if(str[i] == '\0')break;
-		sunxi_usart_putc(&USART_DBG,str[i]);
-	}
-	/*sunxi_usart_putc(&USART_DBG,str[1]);
-	sunxi_usart_putc(&USART_DBG,str[2]);
-	sunxi_usart_putc(&USART_DBG,str[3]);
-	sunxi_usart_putc(&USART_DBG,str[4]);
-	sunxi_usart_putc(&USART_DBG,str[5]);
-	sunxi_usart_putc(&USART_DBG,str[6]);*/
-}
-
-
+void send_string_via_usart(int a);
 
 image_info_t image;
 extern u32	 _start;
@@ -276,9 +192,8 @@ int load_spi_nand(sunxi_spi_t *spi, image_info_t *image)
 	return 0;
 }
 #endif
-char *str1 = "zyxwvu";
+char str1[] = "ghjklasdf";
 char str2[15];
-int ccc = 10;
 void putint(int p);
 
 void print_pc() {
@@ -293,11 +208,9 @@ void print_pc() {
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
 }
-
-
 int main(void)
 {
-	char *str0 = "123456abc";
+	char *str0 = "qwertyuio";
 	
 	int i;
 	//board_init();
@@ -305,7 +218,7 @@ int main(void)
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
 	
-	    uint32_t pc;
+	    /*uint32_t pc;
     __asm__ volatile ("mov %0, pc" : "=r" (pc));
     sunxi_usart_putc(&USART_DBG,'0');
     sunxi_usart_putc(&USART_DBG,'x');
@@ -314,7 +227,7 @@ int main(void)
         sunxi_usart_putc(&USART_DBG,tmp+'0');
     }
 	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
+	sunxi_usart_putc(&USART_DBG,'\n');*/
 	
 	sunxi_clk_init();
 /***************************************************/
@@ -322,12 +235,12 @@ int main(void)
 	//number += 0x10000;
 	char* str22 = (char *)number;
 	for(i = 0;i<14;i++){
-		str22[i] = 'a' + i;
+		str22[i] = 'a' + i+3;
 	}
 	str22[14] = '\0';
 	
 	
-    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+    /*__asm__ volatile ("mov %0, pc" : "=r" (pc));
     sunxi_usart_putc(&USART_DBG,'0');
     sunxi_usart_putc(&USART_DBG,'x');
     for (int i = 7; i >= 0; i--) {
@@ -335,79 +248,20 @@ int main(void)
         sunxi_usart_putc(&USART_DBG,tmp+'0');
     }
 	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
+	sunxi_usart_putc(&USART_DBG,'\n');*/
 	
 	
+	putint((int)str0);
+	sunxi_usart_putc(&USART_DBG,'p');
+	int x = (int)str0;
+	putint(x);
 	
-/********************
-send_string_via_usart((int)0x0003115c);
-int *p = &ccc;
-	int tmp = (int)p;	
-	unsigned int ch = (tmp>>28) & 0xF;
-	char ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	 ch = (tmp>>24) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	 ch = (tmp>>20) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	ch = (tmp>>16) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-
-	ch = (tmp>>12) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
 	
-		ch = (tmp>>8) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-	
-		ch = (tmp>>4) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-		ch = (tmp>>0) & 0xF;
-	 ar = ch + '0';
-	sunxi_usart_putc(&USART_DBG,ar);
-*********************/
-	
-	/*putint((int)str0);
-	putint((int)str1);
-	putint((int)str2);*/
-	send_string_via_usart((int)str2);
-	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
-	
-    __asm__ volatile ("mov %0, pc" : "=r" (pc));
-    sunxi_usart_putc(&USART_DBG,'0');
-    sunxi_usart_putc(&USART_DBG,'x');
-    for (int i = 7; i >= 0; i--) {
-    	char tmp = (pc >> (i * 4)) & 0xF;
-        sunxi_usart_putc(&USART_DBG,tmp+'0');
-    }
-	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
-	
-	send_string_via_usart((int)str1);
-	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
-    __asm__ volatile ("mov %0, pc" : "=r" (pc));
-    sunxi_usart_putc(&USART_DBG,'0');
-    sunxi_usart_putc(&USART_DBG,'x');
-    for (int i = 7; i >= 0; i--) {
-    	char tmp = (pc >> (i * 4)) & 0xF;
-        sunxi_usart_putc(&USART_DBG,tmp+'0');
-    }
-	sunxi_usart_putc(&USART_DBG,'\r');
-	sunxi_usart_putc(&USART_DBG,'\n');
 	send_string_via_usart((int)str0);
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
-    __asm__ volatile ("mov %0, pc" : "=r" (pc));
+	
+   /* __asm__ volatile ("mov %0, pc" : "=r" (pc));
     sunxi_usart_putc(&USART_DBG,'0');
     sunxi_usart_putc(&USART_DBG,'x');
     for (int i = 7; i >= 0; i--) {
@@ -415,12 +269,38 @@ int *p = &ccc;
         sunxi_usart_putc(&USART_DBG,tmp+'0');
     }
 	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');*/
+	putint((int)str1);
+	send_string_via_usart((int)str1);
+	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
+    /*__asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');*/
+	putint((int)str2 - 0x10000);
+	send_string_via_usart((int)str2 - 0x10000);
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');
+    /*__asm__ volatile ("mov %0, pc" : "=r" (pc));
+    sunxi_usart_putc(&USART_DBG,'0');
+    sunxi_usart_putc(&USART_DBG,'x');
+    for (int i = 7; i >= 0; i--) {
+    	char tmp = (pc >> (i * 4)) & 0xF;
+        sunxi_usart_putc(&USART_DBG,tmp+'0');
+    }
+	sunxi_usart_putc(&USART_DBG,'\r');
+	sunxi_usart_putc(&USART_DBG,'\n');*/
 	sunxi_usart_putc(&USART_DBG,'}');
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
 /***************************************************/
-	while(1);
+	//while(1);
 	info("AWBoot r%" PRIu32 " starting...\r\n", (u32)BUILD_REVISION);
 	sunxi_dram_init();
 
