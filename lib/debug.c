@@ -22,10 +22,10 @@ void putint(int pc) {
 
 
 void send_string_via_usart(int a) {
-
-	int tmp = a+0x18000;
+	//putint(a);
+	int tmp = a;//+0x18000;
 	char* str = (char*)tmp;
-	putint((int)str);
+	//putint((int)str);
 	for(int i = 0;i<100;i++){
 		if(str[i] == '\0')break;
 		sunxi_usart_putc(&USART_DBG,str[i]);

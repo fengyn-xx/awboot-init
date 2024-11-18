@@ -3,7 +3,8 @@ OUTPUT_ARCH(arm)
 SEARCH_DIR(.)
 MEMORY
 {
-  ram (rwx) : ORIGIN = 0x00038000, LENGTH = 96K
+    flash (rx) : ORIGIN = 0x00420000, LENGTH = 512K
+    ram (rwx) : ORIGIN = 0x00030000, LENGTH = 96K
 }
 STACK_SIZE = 0x1000;
 ENTRY(reset)
@@ -11,19 +12,25 @@ SECTIONS
 {
     .text :
     {
-    . = ALIGN(4);
-    PROVIDE(__spl_start = .);
-    *(.text .text.*)
-    . = ALIGN(4);
-    } > ram
-    . = ALIGN(4);
-    .ARM.exidx : {
-        __exidx_start = .;
-        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-        __exidx_end = .;
-    } > ram
-    PROVIDE(__spl_end = .);
-    PROVIDE(__spl_size = __spl_end - __spl_start);
+        . = ALIGN(4);
+        PROVIDE(__spl_start = .);
+        *(.text .text.*)
+        . = ALIGN(4);
+    } > flash
+    .rodata :
+    {
+        . = ALIGN(4);
+        *(.rodata)
+        . = ALIGN(4);
+    } > flash
+    .data :
+    {
+        . = ALIGN(4);
+        _sdata = .;
+        *(.data .data.*)
+        . = ALIGN(4);
+        _edata = .;
+    } > ram AT > flash
     .bss (NOLOAD) :
     {
         . = ALIGN(4);
@@ -40,6 +47,15 @@ SECTIONS
         . += STACK_SIZE;
         __stack_srv_end = .;
     } > ram
+    .ARM.exidx :
+    {
+        __exidx_start = .;
+        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        __exidx_end = .;
+    } > flash
     . = ALIGN(4);
+    PROVIDE(__spl_end = .);
+    PROVIDE(__spl_size = __spl_end - __spl_start);
+    PROVIDE(data_load_addr = LOADADDR(.data));
     _end = . ;
 }

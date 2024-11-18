@@ -22,8 +22,8 @@
 #define CONFIG_KERNEL_FILENAME "zImage"
 #define CONFIG_DTB_FILENAME	   "sun8i-t113-mangopi-dual.dtb"
 
-#define CONFIG_KERNEL_LOAD_ADDR (SDRAM_BASE + (72 * 1024 * 1024))
-#define CONFIG_DTB_LOAD_ADDR	(SDRAM_BASE + (64 * 1024 * 1024))
+#define CONFIG_KERNEL_LOAD_ADDR (SDRAM_BASE + (72 * 1024 * 1024))//180_0000, 0x4000_0000
+#define CONFIG_DTB_LOAD_ADDR	(SDRAM_BASE + (64 * 1024 * 1024))//100_0000
 
 // 128KB erase sectors, so place them starting from 2nd sector
 #define CONFIG_SPINAND_DTB_ADDR	   (128 * 2048)

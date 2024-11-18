@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 void send_string_via_usart(int a);
-
+void putint(int p);
 image_info_t image;
 extern u32	 _start;
 extern u32	 __spl_start;
@@ -39,8 +39,10 @@ typedef struct {
 
 static int boot_image_setup(unsigned char *addr, unsigned int *entry)
 {
+	putint((int)addr);
+	putint((int)*addr);
 	linux_zimage_header_t *zimage_header = (linux_zimage_header_t *)addr;
-
+	putint((int)zimage_header->magic);
 	if (zimage_header->magic == LINUX_ZIMAGE_MAGIC) {
 		*entry = ((unsigned int)addr + zimage_header->start);
 		return 0;
@@ -192,9 +194,9 @@ int load_spi_nand(sunxi_spi_t *spi, image_info_t *image)
 	return 0;
 }
 #endif
-char str1[] = "ghjklasdf";
+ char str1[] = "ghjklasdf";
+//int str1 = 0x3fc45;
 char str2[15];
-void putint(int p);
 
 void print_pc() {
     uint32_t pc;
@@ -208,15 +210,18 @@ void print_pc() {
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
 }
+ //extern int data_load_addr;
 int main(void)
 {
-	char *str0 = "qwertyuio";
+	 char *str0 = "qwertyuio";
+	//int str0 = 0x27000;
 	
 	int i;
 	//board_init();
 	sunxi_usart_putc(&USART_DBG,'{');
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
+	//putint(data_load_addr);
 	
 	    /*uint32_t pc;
     __asm__ volatile ("mov %0, pc" : "=r" (pc));
@@ -252,9 +257,9 @@ int main(void)
 	
 	
 	putint((int)str0);
-	sunxi_usart_putc(&USART_DBG,'p');
+	/*sunxi_usart_putc(&USART_DBG,'p');
 	int x = (int)str0;
-	putint(x);
+	putint(x);*/
 	
 	
 	send_string_via_usart((int)str0);
@@ -283,8 +288,8 @@ int main(void)
     }
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');*/
-	putint((int)str2 - 0x10000);
-	send_string_via_usart((int)str2 - 0x10000);
+	putint((int)str2);
+	send_string_via_usart((int)str2);
 	sunxi_usart_putc(&USART_DBG,'\r');
 	sunxi_usart_putc(&USART_DBG,'\n');
     /*__asm__ volatile ("mov %0, pc" : "=r" (pc));
@@ -316,7 +321,7 @@ int main(void)
 	image.of_dest = (u8 *)CONFIG_DTB_LOAD_ADDR;
 	image.dest	  = (u8 *)CONFIG_KERNEL_LOAD_ADDR;
 
-#if defined(CONFIG_BOOT_SDCARD) || defined(CONFIG_BOOT_MMC)
+/*#if defined(CONFIG_BOOT_SDCARD) || defined(CONFIG_BOOT_MMC)
 
 	strcpy(image.filename, CONFIG_KERNEL_FILENAME);
 	strcpy(image.of_filename, CONFIG_DTB_FILENAME);
@@ -372,7 +377,7 @@ _spi:
 
 #if defined(CONFIG_BOOT_SDCARD) || defined(CONFIG_BOOT_MMC)
 _boot:
-#endif
+#endif*/
 	if (boot_image_setup((unsigned char *)image.dest, &entry_point)) {
 		fatal("boot setup failed\r\n");
 	}

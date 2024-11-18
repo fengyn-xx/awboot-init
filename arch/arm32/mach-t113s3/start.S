@@ -13,7 +13,13 @@
 #define  ARMV7_MODE_MASK       0x1f
 #define  ARMV7_FIQ_MASK        0x40
 #define  ARMV7_IRQ_MASK        0x80
-
+    .extern main
+    .extern _sdata
+    .extern _edata
+    .extern data_load_addr
+    .extern _sbss
+    .extern _ebss
+    .extern __stack_srv_end
 .arm
 .globl reset
 .text
@@ -27,7 +33,7 @@ reset:
 	.long 0x30                                              /* boot header size */
 	.long 0x30303033                                /* boot header version */
 	.long 0x00020000                                /* return value */
-	.long 0x00028000                                /* run address */
+	.long 0x00020000                               /* run address */
 	.long 0x0                                               /* eGON version */
 	.byte 0x00, 0x00, 0x00, 0x00    /* platform information - 8byte */
 	.byte 0x34, 0x2e, 0x30, 0x00
@@ -85,6 +91,20 @@ reset:
 	@set cntfrq to 24M
 	ldr r0, =24000000
 	mcr p15, 0, r0, c14, c0, 0
+	
+/* 重定位data段 */
+	ldr r1, =data_load_addr  /* data段在bin文件中的地址, 加载地址 */
+	ldr r2, =_sdata 	 /* data段在重定位地址, 运行时的地址 */
+	ldr r3, =_edata 	     /* data段结束地址 */
+
+cpy:
+	ldrb r4, [r1] 		//从r1读到r4 读取一个字节，读取存储地址的值
+	strb r4, [r2] 		//r4存放到r2			  写入到运行地址
+	add r1, r1, #1 		//r1+1					存储地址++
+	add r2, r2, #1 		//r2+1					运行地址++
+	cmp r2, r3 			//r2 r3比较						
+	bne cpy //如果不等则继续拷贝
+	
 	bl prepare_main
 
 	bl main

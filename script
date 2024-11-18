@@ -2,5 +2,10 @@ make
 cd build-all/
 ~/code/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-objdump -S -D awboot-fel.elf  > awboot-fel.txt
 cd ../
+echo "/*******************/"
+echo "already objdump"
+echo "/*******************/"
 ~/xboot_test/xfel-master/xfel-master/xfel write 0x00038000 awboot-fel.bin
+~/xboot_test/xfel-master/xfel-master/xfel write 0x44000000 sun8i-t113-mangopi-dual.dtb
+~/xboot_test/xfel-master/xfel-master/xfel write 0x44800000 zImage
 ~/xboot_test/xfel-master/xfel-master/xfel exec 0x00038000
