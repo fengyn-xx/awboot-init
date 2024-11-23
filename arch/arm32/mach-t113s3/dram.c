@@ -1295,6 +1295,7 @@ static int auto_scan_dram_config(dram_para_t *para)
 
 	return 1;
 }
+
 void print_pointer_address(void *ptr) {
     unsigned long address = (unsigned long)ptr; // 将指针转换为无符号长整型
     unsigned long mask = 0xF; // 用于获取每一位的掩码
@@ -1312,6 +1313,7 @@ void print_pointer_address(void *ptr) {
     sunxi_usart_putc(&USART_DBG, '\r'); // 输出换行符
     sunxi_usart_putc(&USART_DBG, '\n');
 }
+
 int init_DRAM(int type, dram_para_t *para)
 {
 	u32 rc, mem_size_mb;

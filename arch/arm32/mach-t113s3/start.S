@@ -22,6 +22,7 @@
     .extern __stack_srv_end
 .arm
 .globl reset
+.globl zImage
 .text
 
 reset:
@@ -91,6 +92,8 @@ reset:
 	@set cntfrq to 24M
 	ldr r0, =24000000
 	mcr p15, 0, r0, c14, c0, 0
+	
+	
 	
 /* 重定位data段 */
 	ldr r1, =data_load_addr  /* data段在bin文件中的地址, 加载地址 */
@@ -373,3 +376,27 @@ wait_for_tx_complete:      // 等待发送完成
 //    b loop                  // 返回
     
     mov pc,lr
+    
+  zImage:
+/*    ldr r0, =0x24800000     @ 源地址，例如zImage烧录地址
+    ldr r1, =0x44800000     @ 目标地址，例如解压地址
+    ldr r2, =0x003B0000     @ 数据长度，例如2MB
+
+copy_loop:
+    ldr r3, [r0], #4        @ 从源地址读取4字节，r0自增4
+    str r3, [r1], #4        @ 将4字节写入目标地址，r1自增4
+    subs r2, r2, #4         @ 减少搬运长度
+    bne copy_loop           @ 如果长度未减到0，继续搬运*/
+    
+    
+ //dtb部分
+    ldr r0, =0x00400000     @ 源地址，例如zImage烧录地址
+    ldr r1, =0x44000000     @ 目标地址，例如解压地址
+    ldr r2, =0x00006000     @ 数据长度，例如2MB
+
+copy_loop_2:
+    ldr r3, [r0], #4        @ 从源地址读取4字节，r0自增4
+    str r3, [r1], #4        @ 将4字节写入目标地址，r1自增4
+    subs r2, r2, #4         @ 减少搬运长度
+    bne copy_loop_2           @ 如果长度未减到0，继续搬运
+	mov pc,lr

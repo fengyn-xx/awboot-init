@@ -29,6 +29,9 @@ Discarded input sections
  .bss           0x00000000        0x0 build-sdmmc/main.o
  .text.print_pc
                 0x00000000       0x44 build-sdmmc/main.o
+ .text.write_specific_data
+                0x00000000       0x30 build-sdmmc/main.o
+ .rodata        0x00000000       0x14 build-sdmmc/main.o
  .text          0x00000000        0x0 build-sdmmc/board.o
  .data          0x00000000        0x0 build-sdmmc/board.o
  .bss           0x00000000        0x0 build-sdmmc/board.o
@@ -545,216 +548,221 @@ LOAD build-sdmmc/lib/fatfs/ffunicode.o
 LOAD /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a
                 0x00001000                        STACK_SIZE = 0x1000
 
-.text           0x00420000     0x35ec
+.text           0x00420000     0x363c
                 0x00420000                        . = ALIGN (0x4)
                 0x00420000                        PROVIDE (__spl_start = .)
  *(.text .text.*)
- .text          0x00420000      0x738 build-sdmmc/arch/arm32/mach-t113s3/start.o
+ .text          0x00420000      0x758 build-sdmmc/arch/arm32/mach-t113s3/start.o
                 0x00420000                reset
- *fill*         0x00420738        0x8 
- .text          0x00420740       0xe4 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
-                0x00420740                memcpy
+                0x00420700                zImage
+ *fill*         0x00420758        0x8 
+ .text          0x00420760       0xe4 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
+                0x00420760                memcpy
+ .text.read_and_print_hex
+                0x00420844        0x6 build-sdmmc/main.o
+                0x00420844                read_and_print_hex
+ *fill*         0x0042084a        0x2 
  .text.startup.main
-                0x00420824      0x174 build-sdmmc/main.o
-                0x00420824                main
- .text.putint   0x00420998       0x54 build-sdmmc/lib/debug.o
-                0x00420998                putint
+                0x0042084c      0x19c build-sdmmc/main.o
+                0x0042084c                main
+ .text.putint   0x004209e8       0x54 build-sdmmc/lib/debug.o
+                0x004209e8                putint
  .text.send_string_via_usart
-                0x004209ec       0x20 build-sdmmc/lib/debug.o
-                0x004209ec                send_string_via_usart
- .text.message  0x00420a0c       0x12 build-sdmmc/lib/debug.o
-                0x00420a0c                message
- .text.memset   0x00420a1e       0x10 build-sdmmc/lib/string.o
-                0x00420a1e                memset
+                0x00420a3c       0x20 build-sdmmc/lib/debug.o
+                0x00420a3c                send_string_via_usart
+ .text.message  0x00420a5c       0x12 build-sdmmc/lib/debug.o
+                0x00420a5c                message
+ .text.memset   0x00420a6e       0x10 build-sdmmc/lib/string.o
+                0x00420a6e                memset
  .text.calculate_rank_size
-                0x00420a2e       0x1a build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00420a7e       0x1a build-sdmmc/arch/arm32/mach-t113s3/dram.o
  .text.ns_to_t.isra.0
-                0x00420a48       0x12 build-sdmmc/arch/arm32/mach-t113s3/dram.o
- *fill*         0x00420a5a        0x2 
+                0x00420a98       0x12 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ *fill*         0x00420aaa        0x2 
  .text.mctl_core_init
-                0x00420a5c      0xe34 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00420aac      0xe34 build-sdmmc/arch/arm32/mach-t113s3/dram.o
  .text.init_DRAM
-                0x00421890      0x688 build-sdmmc/arch/arm32/mach-t113s3/dram.o
-                0x00421890                init_DRAM
+                0x004218e0      0x688 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x004218e0                init_DRAM
  .text.sunxi_dram_init
-                0x00421f18       0x24 build-sdmmc/arch/arm32/mach-t113s3/dram.o
-                0x00421f18                sunxi_dram_init
+                0x00421f68       0x24 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00421f68                sunxi_dram_init
  .text.sunxi_usart_putc
-                0x00421f3c       0x20 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
-                0x00421f3c                sunxi_usart_putc
- .text.time_ms  0x00421f5c       0x12 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
-                0x00421f5c                time_ms
- .text.time_us  0x00421f6e       0x10 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
-                0x00421f6e                time_us
- .text.udelay   0x00421f7e       0x20 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
-                0x00421f7e                udelay
- .text.mdelay   0x00421f9e       0x22 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
-                0x00421f9e                mdelay
- .text.sdelay   0x00421fc0        0x6 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
-                0x00421fc0                sdelay
+                0x00421f8c       0x20 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+                0x00421f8c                sunxi_usart_putc
+ .text.time_ms  0x00421fac       0x12 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00421fac                time_ms
+ .text.time_us  0x00421fbe       0x10 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00421fbe                time_us
+ .text.udelay   0x00421fce       0x20 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00421fce                udelay
+ .text.mdelay   0x00421fee       0x22 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00421fee                mdelay
+ .text.sdelay   0x00422010        0x6 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00422010                sdelay
  .text.sunxi_gpio_set_value
-                0x00421fc6       0x32 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
-                0x00421fc6                sunxi_gpio_set_value
+                0x00422016       0x32 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+                0x00422016                sunxi_gpio_set_value
  .text.set_module
-                0x00421ff8       0x30 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x00422048       0x30 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
  .text.set_pll_cpux_axi
-                0x00422028       0x94 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
-                0x00422028                set_pll_cpux_axi
+                0x00422078       0x94 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x00422078                set_pll_cpux_axi
  .text.sunxi_clk_init
-                0x004220bc       0xd8 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
-                0x004220bc                sunxi_clk_init
+                0x0042210c       0xd8 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x0042210c                sunxi_clk_init
  .text.show_regs
-                0x00422194       0x4c build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x004221e4       0x4c build-sdmmc/arch/arm32/mach-t113s3/exception.o
  .text.arm32_do_undefined_instruction
-                0x004221e0       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x004221e0                arm32_do_undefined_instruction
+                0x00422230       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00422230                arm32_do_undefined_instruction
  .text.arm32_do_software_interrupt
-                0x00422200       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x00422200                arm32_do_software_interrupt
+                0x00422250       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00422250                arm32_do_software_interrupt
  .text.arm32_do_prefetch_abort
-                0x00422220       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x00422220                arm32_do_prefetch_abort
+                0x00422270       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00422270                arm32_do_prefetch_abort
  .text.arm32_do_data_abort
-                0x00422240       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x00422240                arm32_do_data_abort
+                0x00422290       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00422290                arm32_do_data_abort
  .text.arm32_do_irq
-                0x00422260       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x00422260                arm32_do_irq
+                0x004222b0       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x004222b0                arm32_do_irq
  .text.arm32_do_fiq
-                0x00422280       0x2c build-sdmmc/arch/arm32/mach-t113s3/exception.o
-                0x00422280                arm32_do_fiq
- .text          0x004222ac       0x30 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
-                0x004222ac                __aeabi_uldivmod
- .text          0x004222dc      0x380 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
-                0x004222dc                __udivmoddi4
- .text          0x0042265c      0xa68 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
-                0x00422914                _Unwind_GetCFA
-                0x00422918                __gnu_Unwind_RaiseException
-                0x00422980                __gnu_Unwind_ForcedUnwind
-                0x00422994                __gnu_Unwind_Resume
-                0x004229d4                __gnu_Unwind_Resume_or_Rethrow
-                0x004229e8                _Unwind_Complete
-                0x004229ec                _Unwind_DeleteException
-                0x004229f8                _Unwind_VRS_Get
-                0x00422a48                _Unwind_VRS_Set
-                0x00422a98                __gnu_Unwind_Backtrace
-                0x00422de4                __aeabi_unwind_cpp_pr0
-                0x00422de8                __aeabi_unwind_cpp_pr1
-                0x00422dec                __aeabi_unwind_cpp_pr2
-                0x00422df0                _Unwind_VRS_Pop
- .text          0x004230c4      0x1ac /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
-                0x004230c4                __restore_core_regs
-                0x004230c4                restore_core_regs
-                0x004230dc                __gnu_Unwind_Restore_VFP
-                0x004230e4                __gnu_Unwind_Save_VFP
-                0x004230ec                __gnu_Unwind_Restore_VFP_D
-                0x004230f4                __gnu_Unwind_Save_VFP_D
-                0x004230fc                __gnu_Unwind_Restore_VFP_D_16_to_31
-                0x00423104                __gnu_Unwind_Save_VFP_D_16_to_31
-                0x0042310c                __gnu_Unwind_Restore_WMMXD
-                0x00423150                __gnu_Unwind_Save_WMMXD
-                0x00423194                __gnu_Unwind_Restore_WMMXC
-                0x004231a8                __gnu_Unwind_Save_WMMXC
-                0x004231bc                ___Unwind_RaiseException
-                0x004231bc                _Unwind_RaiseException
-                0x004231e0                ___Unwind_Resume
-                0x004231e0                _Unwind_Resume
-                0x00423204                _Unwind_Resume_or_Rethrow
-                0x00423204                ___Unwind_Resume_or_Rethrow
-                0x00423228                ___Unwind_ForcedUnwind
-                0x00423228                _Unwind_ForcedUnwind
-                0x0042324c                _Unwind_Backtrace
-                0x0042324c                ___Unwind_Backtrace
- .text          0x00423270      0x378 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
-                0x004232c4                __gnu_unwind_execute
-                0x00423598                __gnu_unwind_frame
-                0x004235c8                _Unwind_GetRegionStart
-                0x004235d4                _Unwind_GetLanguageSpecificData
- .text          0x004235e8        0x4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
-                0x004235e8                __aeabi_ldiv0
-                0x004235e8                __aeabi_idiv0
-                0x004235ec                        . = ALIGN (0x4)
+                0x004222d0       0x2c build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x004222d0                arm32_do_fiq
+ .text          0x004222fc       0x30 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+                0x004222fc                __aeabi_uldivmod
+ .text          0x0042232c      0x380 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+                0x0042232c                __udivmoddi4
+ .text          0x004226ac      0xa68 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+                0x00422964                _Unwind_GetCFA
+                0x00422968                __gnu_Unwind_RaiseException
+                0x004229d0                __gnu_Unwind_ForcedUnwind
+                0x004229e4                __gnu_Unwind_Resume
+                0x00422a24                __gnu_Unwind_Resume_or_Rethrow
+                0x00422a38                _Unwind_Complete
+                0x00422a3c                _Unwind_DeleteException
+                0x00422a48                _Unwind_VRS_Get
+                0x00422a98                _Unwind_VRS_Set
+                0x00422ae8                __gnu_Unwind_Backtrace
+                0x00422e34                __aeabi_unwind_cpp_pr0
+                0x00422e38                __aeabi_unwind_cpp_pr1
+                0x00422e3c                __aeabi_unwind_cpp_pr2
+                0x00422e40                _Unwind_VRS_Pop
+ .text          0x00423114      0x1ac /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+                0x00423114                __restore_core_regs
+                0x00423114                restore_core_regs
+                0x0042312c                __gnu_Unwind_Restore_VFP
+                0x00423134                __gnu_Unwind_Save_VFP
+                0x0042313c                __gnu_Unwind_Restore_VFP_D
+                0x00423144                __gnu_Unwind_Save_VFP_D
+                0x0042314c                __gnu_Unwind_Restore_VFP_D_16_to_31
+                0x00423154                __gnu_Unwind_Save_VFP_D_16_to_31
+                0x0042315c                __gnu_Unwind_Restore_WMMXD
+                0x004231a0                __gnu_Unwind_Save_WMMXD
+                0x004231e4                __gnu_Unwind_Restore_WMMXC
+                0x004231f8                __gnu_Unwind_Save_WMMXC
+                0x0042320c                ___Unwind_RaiseException
+                0x0042320c                _Unwind_RaiseException
+                0x00423230                ___Unwind_Resume
+                0x00423230                _Unwind_Resume
+                0x00423254                _Unwind_Resume_or_Rethrow
+                0x00423254                ___Unwind_Resume_or_Rethrow
+                0x00423278                ___Unwind_ForcedUnwind
+                0x00423278                _Unwind_ForcedUnwind
+                0x0042329c                _Unwind_Backtrace
+                0x0042329c                ___Unwind_Backtrace
+ .text          0x004232c0      0x378 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+                0x00423314                __gnu_unwind_execute
+                0x004235e8                __gnu_unwind_frame
+                0x00423618                _Unwind_GetRegionStart
+                0x00423624                _Unwind_GetLanguageSpecificData
+ .text          0x00423638        0x4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+                0x00423638                __aeabi_ldiv0
+                0x00423638                __aeabi_idiv0
+                0x0042363c                        . = ALIGN (0x4)
 
-.glue_7         0x004235ec        0x0
- .glue_7        0x004235ec        0x0 linker stubs
+.glue_7         0x0042363c        0x0
+ .glue_7        0x0042363c        0x0 linker stubs
 
-.glue_7t        0x004235ec        0x0
- .glue_7t       0x004235ec        0x0 linker stubs
+.glue_7t        0x0042363c        0x0
+ .glue_7t       0x0042363c        0x0 linker stubs
 
-.vfp11_veneer   0x004235ec        0x0
- .vfp11_veneer  0x004235ec        0x0 linker stubs
+.vfp11_veneer   0x0042363c        0x0
+ .vfp11_veneer  0x0042363c        0x0 linker stubs
 
-.v4_bx          0x004235ec        0x0
- .v4_bx         0x004235ec        0x0 linker stubs
+.v4_bx          0x0042363c        0x0
+ .v4_bx         0x0042363c        0x0 linker stubs
 
-.iplt           0x004235ec        0x0
- .iplt          0x004235ec        0x0 build-sdmmc/arch/arm32/mach-t113s3/start.o
+.iplt           0x0042363c        0x0
+ .iplt          0x0042363c        0x0 build-sdmmc/arch/arm32/mach-t113s3/start.o
 
-.rodata         0x004235ec       0x60
-                0x004235ec                        . = ALIGN (0x4)
+.rodata         0x0042363c       0x60
+                0x0042363c                        . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x004235ec       0x60 build-sdmmc/arch/arm32/mach-t113s3/dram.o
-                0x0042364c                        . = ALIGN (0x4)
+ .rodata        0x0042363c       0x60 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x0042369c                        . = ALIGN (0x4)
 
 .rodata.main.str1.1
-                0x0042364c       0x85
+                0x0042369c       0xc6
  .rodata.main.str1.1
-                0x0042364c       0x85 build-sdmmc/main.o
+                0x0042369c       0xc6 build-sdmmc/main.o
 
 .rodata.mctl_core_init.str1.1
-                0x004236d1       0x6e
+                0x00423762       0x6e
  .rodata.mctl_core_init.str1.1
-                0x004236d1       0x6e build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00423762       0x6e build-sdmmc/arch/arm32/mach-t113s3/dram.o
 
 .rodata.init_DRAM.str1.1
-                0x0042373f      0x39b
+                0x004237d0      0x39b
  .rodata.init_DRAM.str1.1
-                0x0042373f      0x39b build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x004237d0      0x39b build-sdmmc/arch/arm32/mach-t113s3/dram.o
 
 .rodata.ac_remapping_tables
-                0x00423ada       0xdc
+                0x00423b6b       0xdc
  .rodata.ac_remapping_tables
-                0x00423ada       0xdc build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00423b6b       0xdc build-sdmmc/arch/arm32/mach-t113s3/dram.o
 
 .rodata.show_regs.str1.1
-                0x00423bb6       0x67
+                0x00423c47       0x67
  .rodata.show_regs.str1.1
-                0x00423bb6       0x67 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423c47       0x67 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_undefined_instruction.str1.1
-                0x00423c1d       0x2b
+                0x00423cae       0x2b
  .rodata.arm32_do_undefined_instruction.str1.1
-                0x00423c1d       0x2b build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423cae       0x2b build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_software_interrupt.str1.1
-                0x00423c48       0x28
+                0x00423cd9       0x28
  .rodata.arm32_do_software_interrupt.str1.1
-                0x00423c48       0x28 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423cd9       0x28 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_prefetch_abort.str1.1
-                0x00423c70       0x24
+                0x00423d01       0x24
  .rodata.arm32_do_prefetch_abort.str1.1
-                0x00423c70       0x24 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423d01       0x24 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_data_abort.str1.1
-                0x00423c94       0x20
+                0x00423d25       0x20
  .rodata.arm32_do_data_abort.str1.1
-                0x00423c94       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423d25       0x20 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_irq.str1.1
-                0x00423cb4       0x23
+                0x00423d45       0x23
  .rodata.arm32_do_irq.str1.1
-                0x00423cb4       0x23 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423d45       0x23 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
 .rodata.arm32_do_fiq.str1.1
-                0x00423cd7       0x23
+                0x00423d68       0x23
  .rodata.arm32_do_fiq.str1.1
-                0x00423cd7       0x23 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00423d68       0x23 build-sdmmc/arch/arm32/mach-t113s3/exception.o
 
-.ARM.extab      0x00423cfc       0x18
- .ARM.extab     0x00423cfc       0x18 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+.ARM.extab      0x00423d8c       0x18
+ .ARM.extab     0x00423d8c       0x18 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
 
-.data           0x00030000       0x24 load address 0x00423d14
+.data           0x00030000       0x24 load address 0x00423da4
                 0x00030000                        . = ALIGN (0x4)
                 0x00030000                        _sdata = .
  *(.data .data.*)
@@ -767,10 +775,10 @@ LOAD /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a
                 0x00030024                        . = ALIGN (0x4)
                 0x00030024                        _edata = .
 
-.igot.plt       0x00030024        0x0 load address 0x00423d38
+.igot.plt       0x00030024        0x0 load address 0x00423dc8
  .igot.plt      0x00030024        0x0 build-sdmmc/arch/arm32/mach-t113s3/start.o
 
-.bss            0x00030024       0xa4 load address 0x00423d38
+.bss            0x00030024       0xa4 load address 0x00423dc8
                 0x00030024                        . = ALIGN (0x4)
                 0x00030024                        _sbss = .
  *(.bss .bss.*)
@@ -783,34 +791,34 @@ LOAD /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a
                 0x000300c8                        . = ALIGN (0x4)
                 0x000300c8                        _ebss = .
 
-.stack          0x000300c8     0x1000 load address 0x00423d38
+.stack          0x000300c8     0x1000 load address 0x00423dc8
                 0x000300c8                        . = ALIGN (0x8)
                 0x000300c8                        __stack_srv_start = .
                 0x000310c8                        . = (. + STACK_SIZE)
  *fill*         0x000300c8     0x1000 
                 0x000310c8                        __stack_srv_end = .
 
-.ARM.exidx      0x00423d38       0xc0
-                0x00423d38                        __exidx_start = .
+.ARM.exidx      0x00423dc8       0xc0
+                0x00423dc8                        __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x00423d38       0x10 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
+ .ARM.exidx     0x00423dc8       0x10 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
                                   0x8 (size before relaxing)
- .ARM.exidx     0x00423d48        0x0 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .ARM.exidx     0x00423dd8        0x0 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
                                   0x8 (size before relaxing)
- .ARM.exidx     0x00423d48       0x78 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .ARM.exidx     0x00423dd8       0x78 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
                                  0xd8 (size before relaxing)
- .ARM.exidx     0x00423dc0       0x38 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
-                0x00423df8                        __exidx_end = .
-                0x00423df8                        . = ALIGN (0x4)
-                0x00423df8                        PROVIDE (__spl_end = .)
-                0x00003df8                        PROVIDE (__spl_size = (__spl_end - __spl_start))
-                0x00423d14                        PROVIDE (data_load_addr = LOADADDR (.data))
-                0x00423df8                        _end = .
+ .ARM.exidx     0x00423e50       0x38 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+                0x00423e88                        __exidx_end = .
+                0x00423e88                        . = ALIGN (0x4)
+                0x00423e88                        PROVIDE (__spl_end = .)
+                0x00003e88                        PROVIDE (__spl_size = (__spl_end - __spl_start))
+                0x00423da4                        PROVIDE (data_load_addr = LOADADDR (.data))
+                0x00423e88                        _end = .
 OUTPUT(build-sdmmc/awboot-fel.elf elf32-littlearm)
 LOAD linker stubs
 
-.rel.dyn        0x00423df8        0x0
- .rel.iplt      0x00423df8        0x0 build-sdmmc/arch/arm32/mach-t113s3/start.o
+.rel.dyn        0x00423e88        0x0
+ .rel.iplt      0x00423e88        0x0 build-sdmmc/arch/arm32/mach-t113s3/start.o
 
 .ARM.attributes
                 0x00000000       0x37
@@ -867,25 +875,25 @@ LOAD linker stubs
  .comment       0x00000026       0x27 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
  .comment       0x00000026       0x27 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
 
-.debug_line     0x00000000     0x66a5
- .debug_line    0x00000000      0x121 build-sdmmc/arch/arm32/mach-t113s3/start.o
- .debug_line    0x00000121       0x85 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
- .debug_line    0x000001a6      0x46e build-sdmmc/main.o
- .debug_line    0x00000614      0x163 build-sdmmc/board.o
- .debug_line    0x00000777      0x1ca build-sdmmc/lib/debug.o
- .debug_line    0x00000941      0x31e build-sdmmc/lib/string.o
- .debug_line    0x00000c5f     0x2d76 build-sdmmc/arch/arm32/mach-t113s3/dram.o
- .debug_line    0x000039d5      0x2c0 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
- .debug_line    0x00003c95      0x1a3 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
- .debug_line    0x00003e38      0x2eb build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
- .debug_line    0x00004123      0x6c3 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
- .debug_line    0x000047e6      0x1e4 build-sdmmc/arch/arm32/mach-t113s3/exception.o
- .debug_line    0x000049ca       0x4e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_line    0x00004a18      0x5ad /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
- .debug_line    0x00004fc5     0x109b /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
- .debug_line    0x00006060       0x97 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
- .debug_line    0x000060f7      0x564 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
- .debug_line    0x0000665b       0x4a /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+.debug_line     0x00000000     0x674c
+ .debug_line    0x00000000      0x12b build-sdmmc/arch/arm32/mach-t113s3/start.o
+ .debug_line    0x0000012b       0x85 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
+ .debug_line    0x000001b0      0x50a build-sdmmc/main.o
+ .debug_line    0x000006ba      0x163 build-sdmmc/board.o
+ .debug_line    0x0000081d      0x1ca build-sdmmc/lib/debug.o
+ .debug_line    0x000009e7      0x31e build-sdmmc/lib/string.o
+ .debug_line    0x00000d05     0x2d77 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ .debug_line    0x00003a7c      0x2c0 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+ .debug_line    0x00003d3c      0x1a3 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+ .debug_line    0x00003edf      0x2eb build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+ .debug_line    0x000041ca      0x6c3 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+ .debug_line    0x0000488d      0x1e4 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+ .debug_line    0x00004a71       0x4e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_line    0x00004abf      0x5ad /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .debug_line    0x0000506c     0x109b /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .debug_line    0x00006107       0x97 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+ .debug_line    0x0000619e      0x564 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+ .debug_line    0x00006702       0x4a /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
 
 .debug_line_str
                 0x00000000      0x105
@@ -903,190 +911,190 @@ LOAD linker stubs
                 0x000000f9        0xc /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
                                  0x9c (size before relaxing)
 
-.debug_info     0x00000000     0xc1c6
+.debug_info     0x00000000     0xc367
  .debug_info    0x00000000       0x25 build-sdmmc/arch/arm32/mach-t113s3/start.o
  .debug_info    0x00000025       0x25 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
- .debug_info    0x0000004a      0x9d2 build-sdmmc/main.o
- .debug_info    0x00000a1c      0xc55 build-sdmmc/board.o
- .debug_info    0x00001671      0x2d3 build-sdmmc/lib/debug.o
- .debug_info    0x00001944      0x4b7 build-sdmmc/lib/string.o
- .debug_info    0x00001dfb     0x486e build-sdmmc/arch/arm32/mach-t113s3/dram.o
- .debug_info    0x00006669      0x4f0 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
- .debug_info    0x00006b59      0x270 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
- .debug_info    0x00006dc9      0x5d1 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
- .debug_info    0x0000739a     0x181c build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
- .debug_info    0x00008bb6      0x4a8 build-sdmmc/arch/arm32/mach-t113s3/exception.o
- .debug_info    0x0000905e       0x24 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_info    0x00009082      0x6f3 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
- .debug_info    0x00009775     0x1f0f /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
- .debug_info    0x0000b684       0x9e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
- .debug_info    0x0000b722      0xa6b /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
- .debug_info    0x0000c18d       0x39 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0000004a      0xb73 build-sdmmc/main.o
+ .debug_info    0x00000bbd      0xc55 build-sdmmc/board.o
+ .debug_info    0x00001812      0x2d3 build-sdmmc/lib/debug.o
+ .debug_info    0x00001ae5      0x4b7 build-sdmmc/lib/string.o
+ .debug_info    0x00001f9c     0x486e build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ .debug_info    0x0000680a      0x4f0 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+ .debug_info    0x00006cfa      0x270 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+ .debug_info    0x00006f6a      0x5d1 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+ .debug_info    0x0000753b     0x181c build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+ .debug_info    0x00008d57      0x4a8 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+ .debug_info    0x000091ff       0x24 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_info    0x00009223      0x6f3 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .debug_info    0x00009916     0x1f0f /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .debug_info    0x0000b825       0x9e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+ .debug_info    0x0000b8c3      0xa6b /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+ .debug_info    0x0000c32e       0x39 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
 
-.debug_abbrev   0x00000000     0x1e06
+.debug_abbrev   0x00000000     0x1e79
  .debug_abbrev  0x00000000       0x14 build-sdmmc/arch/arm32/mach-t113s3/start.o
  .debug_abbrev  0x00000014       0x14 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
- .debug_abbrev  0x00000028      0x330 build-sdmmc/main.o
- .debug_abbrev  0x00000358      0x267 build-sdmmc/board.o
- .debug_abbrev  0x000005bf      0x16c build-sdmmc/lib/debug.o
- .debug_abbrev  0x0000072b       0xda build-sdmmc/lib/string.o
- .debug_abbrev  0x00000805      0x413 build-sdmmc/arch/arm32/mach-t113s3/dram.o
- .debug_abbrev  0x00000c18      0x1a4 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
- .debug_abbrev  0x00000dbc      0x13e build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
- .debug_abbrev  0x00000efa      0x1ee build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
- .debug_abbrev  0x000010e8      0x291 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
- .debug_abbrev  0x00001379      0x14e build-sdmmc/arch/arm32/mach-t113s3/exception.o
- .debug_abbrev  0x000014c7       0x14 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_abbrev  0x000014db      0x173 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
- .debug_abbrev  0x0000164e      0x481 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
- .debug_abbrev  0x00001acf       0x21 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
- .debug_abbrev  0x00001af0      0x2f7 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
- .debug_abbrev  0x00001de7       0x1f /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x00000028      0x3a3 build-sdmmc/main.o
+ .debug_abbrev  0x000003cb      0x267 build-sdmmc/board.o
+ .debug_abbrev  0x00000632      0x16c build-sdmmc/lib/debug.o
+ .debug_abbrev  0x0000079e       0xda build-sdmmc/lib/string.o
+ .debug_abbrev  0x00000878      0x413 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ .debug_abbrev  0x00000c8b      0x1a4 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+ .debug_abbrev  0x00000e2f      0x13e build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+ .debug_abbrev  0x00000f6d      0x1ee build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+ .debug_abbrev  0x0000115b      0x291 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+ .debug_abbrev  0x000013ec      0x14e build-sdmmc/arch/arm32/mach-t113s3/exception.o
+ .debug_abbrev  0x0000153a       0x14 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_abbrev  0x0000154e      0x173 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .debug_abbrev  0x000016c1      0x481 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .debug_abbrev  0x00001b42       0x21 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+ .debug_abbrev  0x00001b63      0x2f7 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+ .debug_abbrev  0x00001e5a       0x1f /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
 
-.debug_aranges  0x00000000      0x388
+.debug_aranges  0x00000000      0x398
  .debug_aranges
                 0x00000000       0x20 build-sdmmc/arch/arm32/mach-t113s3/start.o
  .debug_aranges
                 0x00000020       0x20 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
  .debug_aranges
-                0x00000040       0x28 build-sdmmc/main.o
+                0x00000040       0x38 build-sdmmc/main.o
  .debug_aranges
-                0x00000068       0x30 build-sdmmc/board.o
+                0x00000078       0x30 build-sdmmc/board.o
  .debug_aranges
-                0x00000098       0x30 build-sdmmc/lib/debug.o
+                0x000000a8       0x30 build-sdmmc/lib/debug.o
  .debug_aranges
-                0x000000c8       0x70 build-sdmmc/lib/string.o
+                0x000000d8       0x70 build-sdmmc/lib/string.o
  .debug_aranges
-                0x00000138       0x50 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00000148       0x50 build-sdmmc/arch/arm32/mach-t113s3/dram.o
  .debug_aranges
-                0x00000188       0x28 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+                0x00000198       0x28 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
  .debug_aranges
-                0x000001b0       0x48 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x000001c0       0x48 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
  .debug_aranges
-                0x000001f8       0x38 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+                0x00000208       0x38 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
  .debug_aranges
-                0x00000230       0x38 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x00000240       0x38 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
  .debug_aranges
-                0x00000268       0x50 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00000278       0x50 build-sdmmc/arch/arm32/mach-t113s3/exception.o
  .debug_aranges
-                0x000002b8       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+                0x000002c8       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
  .debug_aranges
-                0x000002d8       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+                0x000002e8       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
  .debug_aranges
-                0x000002f8       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+                0x00000308       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
  .debug_aranges
-                0x00000318       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+                0x00000328       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
  .debug_aranges
-                0x00000338       0x30 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+                0x00000348       0x30 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
  .debug_aranges
-                0x00000368       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+                0x00000378       0x20 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
 
-.debug_str      0x00000000     0x2f9f
+.debug_str      0x00000000     0x2fce
  .debug_str     0x00000000       0x58 build-sdmmc/arch/arm32/mach-t113s3/start.o
  .debug_str     0x00000058       0x20 build-sdmmc/arch/arm32/mach-t113s3/memcpy.o
                                  0x59 (size before relaxing)
- .debug_str     0x00000078      0x354 build-sdmmc/main.o
-                                0x40f (size before relaxing)
- .debug_str     0x000003cc      0x5f4 build-sdmmc/board.o
+ .debug_str     0x00000078      0x399 build-sdmmc/main.o
+                                0x469 (size before relaxing)
+ .debug_str     0x00000411      0x5f4 build-sdmmc/board.o
                                 0x84c (size before relaxing)
- .debug_str     0x000009c0        0xc build-sdmmc/lib/debug.o
+ .debug_str     0x00000a05        0xc build-sdmmc/lib/debug.o
                                 0x22c (size before relaxing)
- .debug_str     0x000009cc       0x5f build-sdmmc/lib/string.o
+ .debug_str     0x00000a11       0x5f build-sdmmc/lib/string.o
                                 0x206 (size before relaxing)
- .debug_str     0x00000a2b      0x4d9 build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ .debug_str     0x00000a70      0x4c8 build-sdmmc/arch/arm32/mach-t113s3/dram.o
                                 0x73c (size before relaxing)
- .debug_str     0x00000f04       0x30 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+ .debug_str     0x00000f38       0x30 build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
                                 0x277 (size before relaxing)
- .debug_str     0x00000f34       0x68 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+ .debug_str     0x00000f68       0x68 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
                                 0x221 (size before relaxing)
- .debug_str     0x00000f9c      0x113 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+ .debug_str     0x00000fd0      0x113 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
                                 0x317 (size before relaxing)
- .debug_str     0x000010af      0xc1b build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+ .debug_str     0x000010e3      0xc1b build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
                                 0xe1d (size before relaxing)
- .debug_str     0x00001cca       0xbe build-sdmmc/arch/arm32/mach-t113s3/exception.o
+ .debug_str     0x00001cfe       0xbe build-sdmmc/arch/arm32/mach-t113s3/exception.o
                                 0x296 (size before relaxing)
- .debug_str     0x00001d88       0xa4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_str     0x00001e2c      0x57e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .debug_str     0x00001dbc       0xa4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_str     0x00001e60      0x57e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
                                 0x678 (size before relaxing)
- .debug_str     0x000023aa      0xa15 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .debug_str     0x000023de      0xa10 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
                                 0xc49 (size before relaxing)
- .debug_str     0x00002dbf       0xb5 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
+ .debug_str     0x00002dee       0xb5 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(libunwind.o)
                                 0x1a6 (size before relaxing)
- .debug_str     0x00002e74       0xdf /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+ .debug_str     0x00002ea3       0xdf /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
                                 0x5a2 (size before relaxing)
- .debug_str     0x00002f53       0x4c /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x00002f82       0x4c /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_dvmd_tls.o)
                                  0xc4 (size before relaxing)
 
 .debug_loclists
-                0x00000000     0x5de9
+                0x00000000     0x5e9b
  .debug_loclists
-                0x00000000      0x18e build-sdmmc/main.o
+                0x00000000      0x240 build-sdmmc/main.o
  .debug_loclists
-                0x0000018e       0x31 build-sdmmc/board.o
+                0x00000240       0x31 build-sdmmc/board.o
  .debug_loclists
-                0x000001bf       0xf6 build-sdmmc/lib/debug.o
+                0x00000271       0xf6 build-sdmmc/lib/debug.o
  .debug_loclists
-                0x000002b5      0x485 build-sdmmc/lib/string.o
+                0x00000367      0x485 build-sdmmc/lib/string.o
  .debug_loclists
-                0x0000073a     0x295d build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x000007ec     0x295d build-sdmmc/arch/arm32/mach-t113s3/dram.o
  .debug_loclists
-                0x00003097      0x1eb build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+                0x00003149      0x1eb build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
  .debug_loclists
-                0x00003282       0xfd build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x00003334       0xfd build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
  .debug_loclists
-                0x0000337f      0x2e1 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+                0x00003431      0x2e1 build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
  .debug_loclists
-                0x00003660      0x4a9 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x00003712      0x4a9 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
  .debug_loclists
-                0x00003b09       0xe2 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00003bbb       0xe2 build-sdmmc/arch/arm32/mach-t113s3/exception.o
  .debug_loclists
-                0x00003beb      0xa72 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+                0x00003c9d      0xa72 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
  .debug_loclists
-                0x0000465d     0x13bf /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+                0x0000470f     0x13bf /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
  .debug_loclists
-                0x00005a1c      0x3cd /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+                0x00005ace      0x3cd /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
 
 .debug_rnglists
-                0x00000000      0x7ab
+                0x00000000      0x7c3
  .debug_rnglists
-                0x00000000       0x56 build-sdmmc/main.o
+                0x00000000       0x6e build-sdmmc/main.o
  .debug_rnglists
-                0x00000056       0x1f build-sdmmc/board.o
+                0x0000006e       0x1f build-sdmmc/board.o
  .debug_rnglists
-                0x00000075       0x3a build-sdmmc/lib/debug.o
+                0x0000008d       0x3a build-sdmmc/lib/debug.o
  .debug_rnglists
-                0x000000af       0x4f build-sdmmc/lib/string.o
+                0x000000c7       0x4f build-sdmmc/lib/string.o
  .debug_rnglists
-                0x000000fe      0x38d build-sdmmc/arch/arm32/mach-t113s3/dram.o
+                0x00000116      0x38d build-sdmmc/arch/arm32/mach-t113s3/dram.o
  .debug_rnglists
-                0x0000048b       0x3d build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+                0x000004a3       0x3d build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
  .debug_rnglists
-                0x000004c8       0x49 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+                0x000004e0       0x49 build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
  .debug_rnglists
-                0x00000511       0x6d build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+                0x00000529       0x6d build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
  .debug_rnglists
-                0x0000057e       0x72 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+                0x00000596       0x72 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
  .debug_rnglists
-                0x000005f0       0x37 build-sdmmc/arch/arm32/mach-t113s3/exception.o
+                0x00000608       0x37 build-sdmmc/arch/arm32/mach-t113s3/exception.o
  .debug_rnglists
-                0x00000627       0x7e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+                0x0000063f       0x7e /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
  .debug_rnglists
-                0x000006a5       0xcc /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+                0x000006bd       0xcc /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
  .debug_rnglists
-                0x00000771       0x3a /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+                0x00000789       0x3a /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
 
-.debug_frame    0x00000000      0x9cc
- .debug_frame   0x00000000       0x50 build-sdmmc/main.o
- .debug_frame   0x00000050       0x64 build-sdmmc/board.o
- .debug_frame   0x000000b4       0x84 build-sdmmc/lib/debug.o
- .debug_frame   0x00000138       0xf4 build-sdmmc/lib/string.o
- .debug_frame   0x0000022c       0xdc build-sdmmc/arch/arm32/mach-t113s3/dram.o
- .debug_frame   0x00000308       0x3c build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
- .debug_frame   0x00000344       0x9c build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
- .debug_frame   0x000003e0       0x6c build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
- .debug_frame   0x0000044c       0x74 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
- .debug_frame   0x000004c0       0xdc build-sdmmc/arch/arm32/mach-t113s3/exception.o
- .debug_frame   0x0000059c       0x2c /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000005c8       0x40 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
- .debug_frame   0x00000608      0x2d0 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
- .debug_frame   0x000008d8       0xf4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)
+.debug_frame    0x00000000      0xa00
+ .debug_frame   0x00000000       0x84 build-sdmmc/main.o
+ .debug_frame   0x00000084       0x64 build-sdmmc/board.o
+ .debug_frame   0x000000e8       0x84 build-sdmmc/lib/debug.o
+ .debug_frame   0x0000016c       0xf4 build-sdmmc/lib/string.o
+ .debug_frame   0x00000260       0xdc build-sdmmc/arch/arm32/mach-t113s3/dram.o
+ .debug_frame   0x0000033c       0x3c build-sdmmc/arch/arm32/mach-t113s3/sunxi_usart.o
+ .debug_frame   0x00000378       0x9c build-sdmmc/arch/arm32/mach-t113s3/arch_timer.o
+ .debug_frame   0x00000414       0x6c build-sdmmc/arch/arm32/mach-t113s3/sunxi_gpio.o
+ .debug_frame   0x00000480       0x74 build-sdmmc/arch/arm32/mach-t113s3/sunxi_clk.o
+ .debug_frame   0x000004f4       0xdc build-sdmmc/arch/arm32/mach-t113s3/exception.o
+ .debug_frame   0x000005d0       0x2c /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x000005fc       0x40 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000063c      0x2d0 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(unwind-arm.o)
+ .debug_frame   0x0000090c       0xf4 /usr/lib/gcc/arm-none-eabi/12.2.1/thumb/v7ve+simd/hard/libgcc.a(pr-support.o)

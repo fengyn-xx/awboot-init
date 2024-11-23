@@ -5,6 +5,8 @@ cd ../
 echo "/*******************/"
 echo "already objdump"
 echo "/*******************/"
+~/xboot_test/xfel-master/xfel-master/xfel ddr t113-s3
+sleep 3
 ~/xboot_test/xfel-master/xfel-master/xfel write 0x00038000 awboot-fel.bin
 ~/xboot_test/xfel-master/xfel-master/xfel write 0x44000000 sun8i-t113-mangopi-dual.dtb
 ~/xboot_test/xfel-master/xfel-master/xfel write 0x44800000 zImage

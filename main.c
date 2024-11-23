@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+extern void zImage(void);
 void send_string_via_usart(int a);
 void putint(int p);
 image_info_t image;
@@ -211,8 +211,49 @@ void print_pc() {
 	sunxi_usart_putc(&USART_DBG,'\n');
 }
  //extern int data_load_addr;
+ 
+ 
+ 
+
+ // 读取指定地址并以十六进制输出
+void read_and_print_hex(const void *addr) {
+    const int *ptr = (const int *)addr;  // 强制转换为字节指针
+    int hex = *ptr;  // 存储十六进制字符串，每字节两位+结束符
+
+	putint(hex);
+
+    // 输出换行以便观察
+}
+
+// 写入特定数据的函数
+void write_specific_data(void *addr, size_t length) {
+    uint8_t *ptr = (uint8_t *)addr;  // 强制转换为字节指针
+
+    // 定义特定的数据（测试数据）
+    const uint8_t specific_data[20] = {
+        0xDE, 0xAD, 0xBE, 0xEF, 0x12, 0x34, 0x56, 0x78,
+        0x9A, 0xBC, 0x01, 0x23, 0x45, 0x67, 0x89, 0xAB,
+        0xCD, 0xEF, 0x00, 0xFF
+    };
+
+    // 写入特定数据，长度不得超过 specific_data 的大小
+    for (size_t i = 0; i < length && i < sizeof(specific_data); ++i) {
+        ptr[i] = specific_data[i];
+    }
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
 int main(void)
 {
+
 	 char *str0 = "qwertyuio";
 	//int str0 = 0x27000;
 	
@@ -309,6 +350,18 @@ int main(void)
 	info("AWBoot r%" PRIu32 " starting...\r\n", (u32)BUILD_REVISION);
 	sunxi_dram_init();
 
+
+	int *p1122 = (int*)0x44800000;
+	read_and_print_hex(p1122);
+	p1122 = (int*)0x44810000;
+	//write_specific_data(p1122,20);
+	read_and_print_hex(p1122);
+	
+	
+	info("get into zImage function...");
+	//zImage();
+	info("already moved zImage and dtb");
+
 	unsigned int entry_point = 0;
 	void (*kernel_entry)(int zero, int arch, unsigned int params);
 
@@ -372,9 +425,9 @@ _spi:
 
 	sunxi_spi_disable(&sunxi_spi0);
 	dma_exit();
-
+init_DRAM
 #endif // CONFIG_SPI_NAND
-
+init_DRAM
 #if defined(CONFIG_BOOT_SDCARD) || defined(CONFIG_BOOT_MMC)
 _boot:
 #endif*/
